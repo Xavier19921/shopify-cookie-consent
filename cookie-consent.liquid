@@ -1,0 +1,38 @@
+{% comment %}
+@author Youfront
+@website https://youfront.dk
+@link https://cookieconsent.insites.com/download/
+{% endcomment %}
+
+{% if settings.cc_enable %}
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css">
+  {{ '//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js' | script_tag }}
+
+  <script>
+    window.addEventListener("load", function(){
+      window.cookieconsent.initialise({
+        "palette": {
+          "popup": {
+            "background": "{% if settings.cc_popup_background_color != blank %}{{ settings.cc_popup_background_color }}{% else %}#000000{% endif %}",
+            {% if settings.cc_popup_text_color != blank %}"text": "{{ settings.cc_popup_text_color }}"{% endif %}
+          },
+          "button": {
+            "background": "{% if settings.cc_button_background_color != blank %}{{ settings.cc_button_background_color }}{% else %}#f1d600{% endif %}",
+            {% if settings.cc_button_text_color != blank %}"text": "{{ settings.cc_button_text_color }}"{% endif %}
+          }
+        },
+        {% if settings.cc_link_type %}
+          {% if settings.cc_link_page != blank %}
+            "content": {
+              "href": "{{ pages[settings.cc_link_page].url }}"
+            },
+          {% else %}
+            "showLink": false,
+          {% endif %}
+        {% endif %}
+        {% if settings.cc_static %}"static": true,{% endif %}
+        {% if settings.cc_theme != blank %}"theme": "{{ settings.cc_theme }}",{% endif %}
+        {% if settings.cc_position != blank %}"position": "{{ settings.cc_position }}"{% endif %}
+      })});
+  </script>
+{% endif %}
