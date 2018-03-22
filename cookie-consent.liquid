@@ -9,7 +9,7 @@
   {{ '//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js' | script_tag }}
 
   <script>
-    window.addEventListener("load", function(){
+    window.addEventListener('load', function(){
       window.cookieconsent.initialise({
         "palette": {
           "popup": {
@@ -31,7 +31,8 @@
         {% if section.settings.cc_static %}"static": true,{% endif %}
         {% if section.settings.cc_theme != blank %}"theme": "{{ section.settings.cc_theme }}",{% endif %}
         {% if section.settings.cc_position != blank %}"position": "{{ section.settings.cc_position }}"{% endif %}
-      })});
+      });
+    });
   </script>
 {% endif %}
 
