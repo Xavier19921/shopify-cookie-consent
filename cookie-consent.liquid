@@ -13,11 +13,11 @@
       window.cookieconsent.initialise({
         "palette": {
           "popup": {
-            "background": "{% if section.settings.cc_popup_background_color != blank %}{{ section.settings.cc_popup_background_color }}{% else %}#000000{% endif %}",
+            "background": "{{ section.settings.cc_popup_background_color | default: '#000000' }}",
             {% if section.settings.cc_popup_text_color != blank %}"text": "{{ section.settings.cc_popup_text_color }}"{% endif %}
           },
           "button": {
-            "background": "{% if section.settings.cc_button_background_color != blank %}{{ section.settings.cc_button_background_color }}{% else %}#f1d600{% endif %}",
+            "background": "{{ section.settings.cc_button_background_color | default: '#f1d600' }}",
             {% if section.settings.cc_button_text_color != blank %}"text": "{{ section.settings.cc_button_text_color }}"{% endif %}
           }
         },
