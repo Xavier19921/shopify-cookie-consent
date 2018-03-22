@@ -17,19 +17,17 @@
             {% if section.settings.cc_popup_text_color != blank %}"text": "{{ section.settings.cc_popup_text_color }}"{% endif %}
           },
           "button": {
-            "background": "{{ section.settings.cc_button_background_color | default: '#f1d600' }}",
+              "background": "{{ section.settings.cc_button_background_color | default: '#f1d600' }}",
             {% if section.settings.cc_button_text_color != blank %}"text": "{{ section.settings.cc_button_text_color }}"{% endif %}
           }
         },
-        {% if section.settings.cc_link_type %}
-          {% if section.settings.cc_link_page != blank %}
-            "content": {
-              "href": "{{ pages[section.settings.cc_link_page].url }}"
-            },
-          {% else %}
-            "showLink": false,
-          {% endif %}
-        {% endif %}
+        "content": {
+          "message": "{{ 'message' | t }}",
+          "dismiss": "{{ 'dismiss' | t }}",
+          "link": "{{ 'link' | t }}",
+          {% if section.settings.cc_link_type and section.settings.cc_link_page != blank %}"href": "{{ pages[section.settings.cc_link_page].url }}"{% endif %}
+        },
+        {% unless section.settings.cc_link_type and section.settings.cc_link_page != blank %}"showLink": false,{% endunless %}
         {% if section.settings.cc_static %}"static": true,{% endif %}
         {% if section.settings.cc_theme != blank %}"theme": "{{ section.settings.cc_theme }}",{% endif %}
         {% if section.settings.cc_position != blank %}"position": "{{ section.settings.cc_position }}"{% endif %}
@@ -159,6 +157,13 @@
         "id": "cc_text_button",
         "label": "Button"
       }
-    ]
+    ],
+    "locales": {
+      "en": {
+        "message": "This website uses cookies to ensure you get the best experience on our website.",
+        "dismiss": "Got it!",
+        "link": "Learn more"
+      }
+    }
   }
 {% endschema %}
