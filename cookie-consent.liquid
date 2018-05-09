@@ -9,29 +9,80 @@
   {{ 'https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.6/cookieconsent.min.js' | script_tag }}
 
   <script>
-    window.addEventListener('load', function(){
-      window.cookieconsent.initialise({
-        "palette": {
-          "popup": {
-            "background": "{{ section.settings.cc_popup_background_color | default: '#000000' }}",
-            {% if section.settings.cc_popup_text_color != blank %}"text": "{{ section.settings.cc_popup_text_color }}"{% endif %}
-          },
-          "button": {
-              "background": "{{ section.settings.cc_button_background_color | default: '#f1d600' }}",
-            {% if section.settings.cc_button_text_color != blank %}"text": "{{ section.settings.cc_button_text_color }}"{% endif %}
-          }
+    var data = {{ section.settings | json }};
+
+    var language = {
+      message: "{{ 'message' | t }}",
+      dismiss: "{{ 'dismiss' | t }}",
+      link: "{{ 'link' | t }}",
+      deny: "{{ 'deny' | t }}"
+    };
+
+    var config = {
+      'palette': {
+        'popup': {
+          'background': '#000'
         },
-        "content": {
-          "message": "{{ 'message' | t }}",
-          "dismiss": "{{ 'dismiss' | t }}",
-          "link": "{{ 'link' | t }}",
-          {% if section.settings.cc_link_type and section.settings.cc_link_page != blank %}"href": "{{ pages[section.settings.cc_link_page].url }}"{% endif %}
-        },
-        {% unless section.settings.cc_link_type and section.settings.cc_link_page != blank %}"showLink": false,{% endunless %}
-        {% if section.settings.cc_static %}"static": true,{% endif %}
-        {% if section.settings.cc_theme != blank %}"theme": "{{ section.settings.cc_theme }}",{% endif %}
-        {% if section.settings.cc_position != blank %}"position": "{{ section.settings.cc_position }}"{% endif %}
-      });
+        'button': {
+          'background': '#f1d600'
+        }
+      },
+      'content': language,
+      'static': data.cc_static,
+    };
+
+    if (data.cc_popup_background_color) {
+      config.palette.popup.background = data.cc_popup_background_color;
+    }
+
+    if (data.cc_popup_text_color) {
+      config.palette.popup.text = data.cc_popup_text_color;
+    }
+
+    if (data.cc_button_background_color) {
+      config.palette.button.background = data.cc_button_background_color;
+    }
+
+    if (data.cc_button_button_color) {
+      config.palette.button.text = data.cc_button_text_color;
+    }
+
+    if (data.cc_link_type === false && ! data.cc_link_page) {
+      config.showLink = false;
+    }
+
+    if (data.cc_link_type && data.cc_link_page) {
+      config.content.href = {{ pages[section.settings.cc_link_page].url | json }};
+    }
+
+    if (data.cc_theme) {
+      config.theme = data.cc_theme;
+    }
+
+    if (data.cc_position) {
+      config.position = data.cc_position;
+    }
+
+    if (data.cc_opt_out) {
+      config.type = 'opt-out';
+      config.onStatusChange = function () {
+        var disableString = 'ga-disable-' + Object.keys(gaData)[0];
+
+        if (this.hasConsented()) {
+          document.cookie = disableString + '=; Max-Age=-99999999;';
+          window[disableString] = false;
+        } else {
+          var CookieDate = new Date();
+          CookieDate.setFullYear(CookieDate.getFullYear() + 1);
+
+          document.cookie = disableString + '=true; expires=' + CookieDate.toGMTString() + ';';
+          window[disableString] = true;
+        }
+      }
+    }
+
+    window.addEventListener('load', function () {
+      window.cookieconsent.initialise(config)
     });
   </script>
 {% endif %}
@@ -79,6 +130,17 @@
         "id": "cc_static",
         "label": "Static",
         "info": "Only works for banner position",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Compliance type"
+      },
+      {
+        "type": "checkbox",
+        "id": "cc_opt_out",
+        "label": "Let users opt out of cookies",
+        "info": "Required additional setup. [See guide](https://github.com/Youfront/shopify-cookie-consent)",
         "default": false
       },
       {
@@ -147,13 +209,24 @@
       {
         "type": "header",
         "content": "Custom text"
+      },
+      {
+        "type": "text",
+        "id": "cc_text_message",
+        "label": "Message"
+      },
+      {
+        "type": "text",
+        "id": "cc_text_button",
+        "label": "Button"
       }
     ],
     "locales": {
       "en": {
         "message": "This website uses cookies to ensure you get the best experience on our website.",
         "dismiss": "Got it!",
-        "link": "Learn more"
+        "link": "Learn more",
+        "deny": "Decline"
       }
     }
   }
