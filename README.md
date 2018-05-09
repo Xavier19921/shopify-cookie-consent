@@ -10,7 +10,7 @@ The cookie consent implementation is built around <a href="https://cookieconsent
 4. Use the theme customizer in your Shopify store backend to style and enable the section.
 
 ## Compliance
-<b>NOTICE</b>: Compliance currently only works for the <a href="https://help.shopify.com/manual/reports-and-analytics/google-analytics" target="_blank">Google Analytics integration 
+<b>NOTICE</b>: Compliance currently only works for the <a href="https://help.shopify.com/manual/reports-and-analytics/google-analytics" target="_blank">Google Analytics integration</a> 
 
 To use compliance feature, you will need to add additional JavaScript to your Analytics snippet. Add the following snippet to "Custom JavaScript"
 
