@@ -1,10 +1,10 @@
-{% comment %}
+{%- comment -%}
   @author Youfront
   @website https://youfront.dk
   @link https://cookieconsent.insites.com/download/
-{% endcomment %}
+{%- endcomment -%}
 
-{% if section.settings.cc_enable %}
+{%- if section.settings.cc_enable -%}
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.6/cookieconsent.min.css">
   {{ 'https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.6/cookieconsent.min.js' | script_tag }}
 
@@ -85,7 +85,7 @@
       window.cookieconsent.initialise(config)
     });
   </script>
-{% endif %}
+{%- endif -%}
 
 {% schema %}
   {
