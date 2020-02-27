@@ -14,7 +14,7 @@ The cookie consent implementation is built around <a href="https://cookieconsent
 
 To use compliance feature, you will need to add additional JavaScript to your Analytics snippet. Add the following snippet to "Custom JavaScript"
 
-```
+```js
 var UA = 'UA-XXXX-Y';
 if (document.cookie.indexOf('ga-disable-' + UA + '=true') > -1) {
   window['ga-disable-' + UA] = true;
