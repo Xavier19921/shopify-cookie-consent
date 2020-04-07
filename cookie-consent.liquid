@@ -11,13 +11,6 @@
   <script>
     var data = {{ section.settings | json }};
 
-    var language = {
-      message: "{{ 'message' | t }}",
-      dismiss: "{{ 'dismiss' | t }}",
-      link: "{{ 'link' | t }}",
-      deny: "{{ 'deny' | t }}"
-    };
-
     var config = {
       'palette': {
         'popup': {
@@ -27,7 +20,12 @@
           'background': '#f1d600'
         }
       },
-      'content': language,
+      'content': {
+        message: "{{ 'message' | t }}",
+        dismiss: "{{ 'dismiss' | t }}",
+        link: "{{ 'link' | t }}",
+        deny: "{{ 'deny' | t }}"
+      },
       'static': data.cc_static,
     };
 
