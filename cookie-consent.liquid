@@ -5,8 +5,8 @@
 {%- endcomment -%}
 
 {%- if section.settings.cc_enable -%}
-  {{ 'https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css' | stylesheet_tag }}
-  {{ 'https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js' | script_tag }}
+  {{- 'https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css' | stylesheet_tag -}}
+  {{- 'https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js' | script_tag -}}
 
   <script>
     var data = {{ section.settings | json }};
