@@ -1,12 +1,12 @@
 {%- comment -%}
   @author Youfront
   @website https://youfront.dk
-  @link https://cookieconsent.insites.com/download/
+  @link https://github.com/osano/cookieconsent/tree/master
 {%- endcomment -%}
 
 {%- if section.settings.cc_enable -%}
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css">
-  {{ 'https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js' | script_tag }}
+  {{ 'https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css' | stylesheet_tag }}
+  {{ 'https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js' | script_tag }}
 
   <script>
     var data = {{ section.settings | json }};
@@ -81,9 +81,7 @@
       }
     }
 
-    window.addEventListener('load', function () {
-      window.cookieconsent.initialise(config)
-    });
+    window.cookieconsent.initialise(config)
   </script>
 {%- endif -%}
 
