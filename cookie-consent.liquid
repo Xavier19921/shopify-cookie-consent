@@ -61,8 +61,9 @@
       config.position = data.cc_position;
     }
 
-    if (data.cc_opt_out) {
-      config.type = 'opt-out';
+    if (data.cc_type) {
+      config.type = data.cc_type;
+
       config.onStatusChange = function () {
         var disableString = 'ga-disable-' + Object.keys(gaData)[0];
 
@@ -133,11 +134,16 @@
         "content": "Compliance type"
       },
       {
-        "type": "checkbox",
-        "id": "cc_opt_out",
-        "label": "Let users opt out of cookies",
-        "info": "Required additional setup. [See guide](https://github.com/Youfront/shopify-cookie-consent)",
-        "default": false
+        "type": "radio",
+        "id": "cc_type",
+        "label": "Compliance type",
+        "info": "(Advanced) [Required additional setup](https://github.com/Youfront/shopify-cookie-consent)",
+        "options": [
+          { "value": "", "label": "Just tell users that we use cookies" },
+          { "value": "opt-out", "label": "Let users opt out of cookies (Advanced)" },
+          { "value": "opt-in", "label": "Ask users to opt into cookies (Advanced)" }
+        ],
+        "default": ""
       },
       {
         "type": "header",
