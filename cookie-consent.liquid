@@ -2,6 +2,7 @@
   @author Youfront
   @website https://youfront.dk
   @link https://github.com/osano/cookieconsent/tree/master
+  @link https://www.osano.com/cookieconsent/download/
 {%- endcomment -%}
 
 {%- if section.settings.cc_enable -%}
@@ -63,24 +64,27 @@
 
     if (data.cc_type) {
       config.type = data.cc_type;
+      config.revokable = true;
 
-      config.onStatusChange = function () {
-        var disableString = 'ga-disable-' + Object.keys(gaData)[0];
+      if (typeof window.deferTrekkie === 'function') {
+        config.onInitialise = function () {
+          if (this.hasConsented()) {
+            window.handleCookieAccept();
+          }
+        };
 
-        if (this.hasConsented()) {
-          document.cookie = disableString + '=; Max-Age=-99999999;';
-          window[disableString] = false;
-        } else {
-          var CookieDate = new Date();
-          CookieDate.setFullYear(CookieDate.getFullYear() + 1);
-
-          document.cookie = disableString + '=true; expires=' + CookieDate.toGMTString() + ';';
-          window[disableString] = true;
-        }
+        config.onStatusChange = function () {
+          if (this.hasConsented()) {
+            window.handleCookieAccept();
+          }
+        };
+      } else {
+        console.error('Cookie Consent is not correctly installed!');
+        console.error('See https://github.com/Youfront/shopify-cookie-consent/wiki/Setting-up-opt-in');
       }
     }
 
-    window.cookieconsent.initialise(config)
+    window.cookieconsent.initialise(config);
   </script>
 {%- endif -%}
 
@@ -140,7 +144,6 @@
         "info": "(Advanced) [Required additional setup](https://github.com/Youfront/shopify-cookie-consent)",
         "options": [
           { "value": "", "label": "Just tell users that we use cookies" },
-          { "value": "opt-out", "label": "Let users opt out of cookies (Advanced)" },
           { "value": "opt-in", "label": "Ask users to opt into cookies (Advanced)" }
         ],
         "default": ""
@@ -214,13 +217,15 @@
         "message": "This website uses cookies to target ads, and ensure you get the best experience on our website.",
         "dismiss": "Got it!",
         "link": "Learn more",
-        "deny": "Decline"
+        "deny": "Decline",
+        "policy": "Cookiepolicy"
       },
       "da": {
         "message": "Dette website anvender cookies for at målrette annoncer, og sikre den bedste oplevelse på vores side.",
         "dismiss": "Forstået!",
         "link": "Læs mere",
-        "deny": "Afvis"
+        "deny": "Afvis",
+        "policy": "Cookiepolitik"
       }
     }
   }
