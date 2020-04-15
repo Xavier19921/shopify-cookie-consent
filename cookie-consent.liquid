@@ -25,7 +25,9 @@
         message: "{{ 'message' | t }}",
         dismiss: "{{ 'dismiss' | t }}",
         link: "{{ 'link' | t }}",
-        deny: "{{ 'deny' | t }}"
+        allow: "{{ 'allow' | t }}",
+        deny: "{{ 'deny' | t }}",
+        policy: "{{ 'policy' | t }}",
       },
       'static': data.cc_static,
     };
@@ -217,6 +219,7 @@
         "message": "This website uses cookies to target ads, and ensure you get the best experience on our website.",
         "dismiss": "Got it!",
         "link": "Learn more",
+        "allow": "Allow cookies",
         "deny": "Decline",
         "policy": "Cookiepolicy"
       },
@@ -224,6 +227,7 @@
         "message": "Dette website anvender cookies for at målrette annoncer, og sikre den bedste oplevelse på vores side.",
         "dismiss": "Forstået!",
         "link": "Læs mere",
+        "allow": "Tillad cookies",
         "deny": "Afvis",
         "policy": "Cookiepolitik"
       }
