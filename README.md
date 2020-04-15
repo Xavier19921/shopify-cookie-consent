@@ -1,5 +1,5 @@
 # Shopify cookie consent
-Cookie consent implementation for Shopify stores
+Cookie consent implementation for Shopify stores.
 
 The cookie consent implementation is built around <a href="https://cookieconsent.insites.com/" target="_blank">Insites' cookie consent</a>.
 
